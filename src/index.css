@@ -1,0 +1,211 @@
+/*--------------------------------------------------------------
+  1. Import & Base
+--------------------------------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #6b7280;
+  --bg-color: #ece9e6;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(31, 38, 135, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: linear-gradient(135deg, #028cfd 0%, #ffffff 100%);
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+/*--------------------------------------------------------------
+  2. Layout & Dashboard
+--------------------------------------------------------------*/
+.dashboard {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+}
+@media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*--------------------------------------------------------------
+  3. Glassmorphic Card
+--------------------------------------------------------------*/
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px var(--shadow-color);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(31, 38, 135, 0.2);
+}
+
+/*--------------------------------------------------------------
+  4. Stats Panel
+--------------------------------------------------------------*/
+.stats h2 {
+  background: linear-gradient(90deg, #4f46e5, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.stats p {
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+/*--------------------------------------------------------------
+  5. Filters Bar
+--------------------------------------------------------------*/
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.filters select,
+.filters input {
+  position: relative;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 2px 8px rgba(31,38,135,0.05);
+  font-size: 0.95rem;
+  outline: none;
+  transition: background 0.3s ease;
+}
+.filters select:focus,
+.filters input:focus { background: rgba(255,255,255,0.8); }
+.filters select:hover,
+.filters input:hover { background: rgba(255,255,255,0.7); }
+
+/*--------------------------------------------------------------
+  6. Task Grid & Fade-In
+--------------------------------------------------------------*/
+.tasks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  opacity: 0;
+  animation: fadeIn 0.8s forwards 0.3s;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+/*--------------------------------------------------------------
+  7. Task Cards
+--------------------------------------------------------------*/
+.task {
+  position: relative;
+  padding: 1.25rem;
+  border-left: 6px solid var(--border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.task.high { border-color: #ef4444; }
+.task.medium { border-color: #f59e0b; }
+.task.low { border-color: #10b981; }
+.task:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(31,38,135,0.15);
+}
+.task.done h3 {
+  text-decoration: line-through;
+  color: var(--secondary-color);
+}
+
+/*--------------------------------------------------------------
+  8. Buttons & Ripple
+--------------------------------------------------------------*/
+.btn {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn::after {
+  content: '';
+  position: absolute;
+  width: 120%; height: 120%;
+  top: 50%; left: 50%;
+  background: rgba(255,255,255,0.3);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  transition: transform 0.4s, opacity 0.4s;
+}
+.btn:focus::after,
+.btn:active::after {
+  opacity: 1; transform: translate(-50%, -50%) scale(1);
+}
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+}
+.btn-danger {
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  color: #fff;
+}
+
+/*--------------------------------------------------------------
+  9. Form Groups & Floating Labels
+--------------------------------------------------------------*/
+.form-group {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none; border-radius: 8px;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(8px);
+  font-size: 0.95rem;
+}
+.form-group label {
+  position: absolute;
+  top: 50%; left: 1rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background: rgba(255,255,255,0.6);
+  padding: 0 0.25rem;
+  transition: top 0.2s, font-size 0.2s;
+  color: #475569;
+}
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group select:focus + label {
+  top: -0.5rem;
+  font-size: 0.75rem;
+}
